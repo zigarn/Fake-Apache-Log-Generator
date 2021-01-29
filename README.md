@@ -12,33 +12,33 @@ It utilizes the excellent [Faker](https://github.com/joke2k/faker/) library to g
 
 Generate a single log line to STDOUT
 ```
-$ python apache-fake-log-gen.py  
+$ python3 apache-fake-log-gen.py  
 ```
 
 Generate 100 log lines into a .log file
 ```
-$ python apache-fake-log-gen.py -n 100 -o LOG 
+$ python3 apache-fake-log-gen.py -n 100 -o LOG 
 ```
 
 Generate 100 log lines into a .gz file at intervals of 10 seconds
 ```
-$ python apache-fake-log-gen.py -n 100 -o GZ -s 10
+$ python3 apache-fake-log-gen.py -n 100 -o GZ -s 10
 ```
 
 Infinite log file generation (useful for testing File Tail Readers)
 ```
-$ python apache-fake-log-gen.py -n 0 -o LOG 
+$ python3 apache-fake-log-gen.py -n 0 -o LOG 
 ```
 
 Prefix the output filename 
 ```
-$ python apache-fake-log-gen.py -n 100 -o LOG -p WEB1
+$ python3 apache-fake-log-gen.py -n 100 -o LOG -p WEB1
 ```
 
 
 Detailed help
 ```
-$ python apache-fake-log-gen.py -h
+$ python3 apache-fake-log-gen.py -h
 usage: apache-fake-log-gen.py [-h] [--output {LOG,GZ,CONSOLE}]
                               [--num NUM_LINES] [--prefix FILE_PREFIX]
                               [--sleep SLEEP]
@@ -59,7 +59,7 @@ optional arguments:
 
 
 ## Requirements
-* Python 2.7
+* Python 3.7
 * ```pip install -r requirements.txt```
 
 ## License

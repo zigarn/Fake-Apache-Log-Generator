@@ -1,17 +1,12 @@
-#!/usr/bin/python
-import time
-import datetime
-import pytz
-import numpy
-import random
-import gzip
-import zipfile
-import sys
+#!/usr/bin/env python3
 import argparse
+import datetime
+import gzip
+import random
+import sys
+import time
+
 from faker import Faker
-from random import randrange
-from tzlocal import get_localzone
-local = get_localzone()
 
 # todo:
 # allow writing different patterns (Common Log, Apache Error log etc)
@@ -26,7 +21,7 @@ class switch(object):
     def __iter__(self):
         """Return the match method once, then stop"""
         yield self.match
-        raise StopIteration
+        return
 
     def match(self, *args):
         """Indicate whether or not to enter a case suite"""
@@ -89,21 +84,20 @@ flag = True
 while (flag):
 
     ip = faker.ipv4()
-    otime = datetime.datetime.now()
-    dt = otime.strftime('%d/%b/%Y:%H:%M:%S')
-    tz = datetime.datetime.now(local).strftime('%z')
-    vrb = numpy.random.choice(verb, p=[0.6, 0.1, 0.1, 0.2])
+    otime = datetime.datetime.now(datetime.timezone.utc)
+    dt = otime.strftime('%d/%b/%Y:%H:%M:%S %z')
+    vrb = random.choices(verb, weights=[0.6, 0.1, 0.1, 0.2])[0]
 
     uri = random.choice(resources)
     if uri.find("apps") > 0:
         uri += str(random.randint(1000, 10000))
 
-    resp = numpy.random.choice(response, p=[0.9, 0.04, 0.02, 0.04])
+    resp = random.choices(response, weights=[0.9, 0.04, 0.02, 0.04])[0]
     byt = int(random.gauss(5000, 50))
     referer = faker.uri()
-    useragent = numpy.random.choice(ualist, p=[0.5, 0.3, 0.1, 0.05, 0.05])()
-    f.write('%s - - [%s %s] "%s %s HTTP/1.1" %s %s "%s" "%s"\n' %
-            (ip, dt, tz, vrb, uri, resp, byt, referer, useragent))
+    useragent = random.choices(ualist, weights=[0.5, 0.3, 0.1, 0.05, 0.05])[0]()
+    f.write('%s - - [%s] "%s %s HTTP/1.1" %s %s "%s" "%s"\n' %
+            (ip, dt, vrb, uri, resp, byt, referer, useragent))
     f.flush()
 
     log_lines = log_lines - 1
